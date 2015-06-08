@@ -22,7 +22,7 @@ complete <-function(df){
 }
 #Returns a list of all columns with missing values
 incomplete<-function(df){
-  dq<-df[,colSums(is.na(df)>0)]
+  dq<-df[,(colSums(is.na(df))>0)]
 }
 #will take a  list, and make a dictionary where the colnames=colnames
 

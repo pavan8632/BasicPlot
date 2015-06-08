@@ -23,9 +23,9 @@ shinyUI(pageWithSidebar(
   mainPanel(
     tabsetPanel(
       tabPanel("Data",tableOutput("contents")),
-      tabPanel("Parsed Data",tableOutput("parsed")),
+      tabPanel("Parsed Data",tableOutput("parsed"),downloadButton('downloadParse','Download Calculation Data')),
       tabPanel("Scree Plot",plotOutput("screeplot",height = 280*2, width = 250*2)),
-      tabPanel("Ferg Plot",plotOutput("BPlot")),
+      tabPanel("Ferg Plot",plotOutput("BPlot"),downloadButton('downloadBplot','Download this plot')),
       tabPanel("Loadings Plot",plotOutput("loadings")) 
          ) 
   )

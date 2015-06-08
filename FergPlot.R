@@ -1,5 +1,6 @@
 library(grid)
 library(ggplot2)
+library(scales)
 #change htis later to a dirname call
 
 
@@ -85,12 +86,13 @@ FergusonPlotCoordinates<-function(df){
 
 #Takes a Loading from FergusonCoord, and the variance explained by this pc
 FergusonPlot1<-function(arr.dat,var.explained){
+  b<-c(-1,0,1)
   var.explained<-round(var.explained,digits=3)
   img<-readPNG("./PCVenn.png")
   g<-rasterGrob(img,interpolate=TRUE)
   plot.grid<-ggplot(data=arr.dat,aes(colour=val,size=val))+
-    scale_colour_gradient2(limits=c(-1,1),low="blue",mid="black",high="red",midpoint=0,guide="colourbar")+
-    scale_size(limits=c(0,4))+
+    scale_colour_gradient2(limits=c(-1,1),low="blue",mid="black",high="red",midpoint=0,guide='colourbar',breaks=b,labels=format(b))+
+    scale_size(limits=c(0,4),guide=FALSE)+
     theme_bw()#+coord_fixed()# +facet_grid(pc ~.)
   plot.grid<-plot.grid+
     scale_x_continuous(name="",limits=c(-7,7))+
@@ -103,7 +105,8 @@ FergusonPlot1<-function(arr.dat,var.explained){
     geom_text(data=arr.dat,aes(x=center,y=center+.3,label=pc),colour="black",size=4,fontface="bold",family="Times")+
     geom_text(data=arr.dat,aes(x=center,y=center-.3),label=var.explained,colour="black",size=4,family="Times")+
    # geom_text(data=arr.dat,aes(x=center+3*cos(angle),y=center+3*sin(angle),hjust=0,vjust=0,angle=(txtangle*180/pi),label=val),colour="black",size=4)+
-    theme(line=element_blank(),text=element_blank(),line=element_blank())
+    #theme(line=element_blank(),text=element_blank(),line=element_blank())
+    theme(line=element_blank(),axis.text.x=element_blank(),axis.text.y=element_blank())
   return(plot.grid)
   
 }

@@ -115,9 +115,24 @@ output$contents<-renderPrint({
   }
 })
 output$parsed<-renderPrint({
-    dim(parse())
+    print(dim(comp()))
+    print("To save out a copy of Data after imputation used for calculation click Download")
 
   })
+output$downloadParse<-downloadHandler(
+  filename=function(){paste('parsedData','.csv',sep='')},
+    content=function(file){
+      write.csv(comp(),file)
+    }
+)
+output$downloadBplot<-downloadHandler(
+  
+  filename=function(){paste('FergPlot',toString(input$Pc2Plot),'.pdf',sep='')},
+  content=function(file){
+    
+    ggsave(file, plot = BasicPlot())
+  }
+)
 #create a listnames for input box 
 output$col<-renderUI({
     p<-parse()
@@ -156,12 +171,13 @@ BasicPlot<-reactive({
     b<-FergusonPlotCoordinates(a)
     plot<-FergusonPlot1(b,varexp)
     plot
-}
-
+  }
 })
 
 output$BPlot<-renderPlot({
-    BasicPlot()
+  BasicPlot()
+  
+  
     
   })
 
