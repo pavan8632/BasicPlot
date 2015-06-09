@@ -42,15 +42,15 @@ FergusonPlotCoordinates<-function(df){
     disp<-div*i
     angle<-c(angle,as.numeric(disp))
     
-    xstart<-5*cos(disp)
-    xend<-1.5*cos(disp)
+    xstart<-10*cos(disp)
+    xend<-3*cos(disp)
     xm<-(xstart+xend)/2
     x1<-c(x1,as.numeric(xstart))
     x2<-c(x2,as.numeric(xend))
     xmid<-c(xmid,as.numeric(xm))
     
-    ystart<-5*sin(disp)
-    yend<-1.5*sin(disp)
+    ystart<-10*sin(disp)
+    yend<-3*sin(disp)
     ym<-(ystart+yend)/2
     y1<-c(y1,as.numeric(ystart))
     y2<-c(y2,as.numeric(yend))
@@ -92,20 +92,19 @@ FergusonPlot1<-function(arr.dat,var.explained){
   g<-rasterGrob(img,interpolate=TRUE)
   plot.grid<-ggplot(data=arr.dat,aes(colour=val,size=val))+
     scale_colour_gradient2(limits=c(-1,1),low="blue",mid="black",high="red",midpoint=0,guide='colourbar',breaks=b,labels=format(b))+
-    scale_size(limits=c(0,4),guide=FALSE)+
+    scale_size(limits=c(0,8),guide=FALSE)+
     theme_bw()#+coord_fixed()# +facet_grid(pc ~.)
   plot.grid<-plot.grid+
-    scale_x_continuous(name="",limits=c(-7,7))+
-    scale_y_continuous(name="",limits=c(-7,7))+
-    geom_segment(data=arr.dat, aes(x=x1,y=y1,xend=x2,yend=y2,size=abs(val)*4),arrow=arrow(type='closed',length=unit(.5,"cm")))+
-    geom_text(data=arr.dat,aes(x=center+6*cos(angle), y=center+5.6*sin(angle),label=row),colour="black",size=4)+
-    geom_text(data=arr.dat,aes(x=center+6*cos(angle), y=center+5.6*sin(angle)-.4,label=val),colour="black",size=4)+
-    annotation_custom(g,xmin=-1,ymin=-1,xmax=1,ymax=1)+
+    scale_x_continuous(name="",limits=c(-13,13))+
+    scale_y_continuous(name="",limits=c(-13,13))+
+    geom_segment(data=arr.dat, aes(x=x1,y=y1,xend=x2,yend=y2,size=abs(val)*8),arrow=arrow(type='closed',length=unit(abs(arr.dat$val)/4+.1,"in")))+
+    geom_text(data=arr.dat,aes(x=center+11.5*cos(angle), y=center+11*sin(angle),label=row),colour="black",size=4)+
+    geom_text(data=arr.dat,aes(x=center+11.5*cos(angle), y=center+11*sin(angle)-.8,label=val),colour="black",size=4)+
+    annotation_custom(g,xmin=-2,ymin=-2,xmax=2,ymax=2)+
     
     geom_text(data=arr.dat,aes(x=center,y=center+.3,label=pc),colour="black",size=4,fontface="bold",family="Times")+
     geom_text(data=arr.dat,aes(x=center,y=center-.3),label=var.explained,colour="black",size=4,family="Times")+
-   # geom_text(data=arr.dat,aes(x=center+3*cos(angle),y=center+3*sin(angle),hjust=0,vjust=0,angle=(txtangle*180/pi),label=val),colour="black",size=4)+
-    #theme(line=element_blank(),text=element_blank(),line=element_blank())
+   # geom_text(data=arr.dat,aes(x=center+3*cos(angle),y=center+3*sin(angle),hjust=0,vjust=0,angle=(txtangle*180/pi),label=val),colour="black",size=4)
     theme(line=element_blank(),axis.text.x=element_blank(),axis.text.y=element_blank())
   return(plot.grid)
   
