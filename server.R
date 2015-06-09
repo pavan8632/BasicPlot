@@ -130,7 +130,7 @@ output$downloadBplot<-downloadHandler(
   filename=function(){paste('FergPlot',toString(input$Pc2Plot),'.pdf',sep='')},
   content=function(file){
     
-    ggsave(file, plot = BasicPlot())
+    ggsave(file, plot = BasicPlot(),width=15,height=10,units="in")
   }
 )
 #create a listnames for input box 
