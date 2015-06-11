@@ -1,7 +1,7 @@
 library(shiny)
 source("./PCAFunc.R")
 shinyUI(pageWithSidebar( 
-  headerPhomanel("Principal Component Analysis"),
+  headerPanel("Principal Component Analysis"),
   
   sidebarPanel(
     fileInput('file1','Choose CSV File', accept=c('text/csv,','.csv')),
